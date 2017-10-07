@@ -1,8 +1,10 @@
 package edu.depaul.csc472.finalproject;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.view.View;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -10,10 +12,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final TextView tx = (TextView) findViewById(R.id.myText);
 
-        tx.setText("FAHAD ALHARBI");
-        tx.setText("Mohammed Alharbi");
+
+    }
+
+    public void onClickSignUp(View v){
+
+    }
+
+    public void onClickLogin(View v){
+        Intent intent = new Intent(this, SignIn.class);
+        startActivity(intent);
 
     }
 }
