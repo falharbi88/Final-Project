@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
         final TextView tx = (TextView) findViewById(R.id.myText);
 
         tx.setText("FAHAD ALHARBI");
+        tx.setText("Mohammed Alharbi");
 
     }
 }
