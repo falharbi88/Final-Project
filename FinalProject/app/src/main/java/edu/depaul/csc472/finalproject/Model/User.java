@@ -5,16 +5,16 @@ package edu.depaul.csc472.finalproject.Model;
  */
 
 public class User {
-    private String Email;
-    private String FirstName;
-    private String LastName;
-    private String Password;
+    private String email;
+    private String firstName;
+    private String lastName;
+    private String password;
 
-    public User(String username, String email, String firstName, String lastName, String password) {
-        this.Email = email;
-        this.FirstName = firstName;
-        this.LastName = lastName;
-        this.Password = password;
+    public User(String email, String firstName, String lastName, String password) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
     }
 
     public User(){
@@ -22,28 +22,28 @@ public class User {
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "Email='" + Email + '\'' +
-                ", FirstName='" + FirstName + '\'' +
-                ", LastName='" + LastName + '\'' +
-                ", Password='" + Password + '\'' +
+                "email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 }

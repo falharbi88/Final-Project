@@ -48,7 +48,7 @@ public class SignIn extends AppCompatActivity {
                             }else
                                 Toast.makeText(SignIn.this, "Sign in Failed!!!!!", Toast.LENGTH_LONG).show();
                         }else{
-
+                            myDialog.dismiss();
                             Toast.makeText(SignIn.this,"User not Found", Toast.LENGTH_LONG).show();
 
                         }
