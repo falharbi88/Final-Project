@@ -1,6 +1,7 @@
 package edu.depaul.csc472.finalproject;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,8 @@ public class SignIn extends AppCompatActivity {
         login= (Button) findViewById(R.id.loginButton);
         usernameInput = (EditText) findViewById(R.id.usernameInput);
         passwordInput = (EditText) findViewById(R.id.passwordInput);
+        usernameInput.setText("");
+        passwordInput.setText("");
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference table_user = database.getReference("User");
 
@@ -45,6 +48,8 @@ public class SignIn extends AppCompatActivity {
                             User user = dataSnapshot.child(usernameInput.getText().toString()).getValue(User.class);
                             if(user.getPassword().equals(passwordInput.getText().toString())) {
                                 Toast.makeText(SignIn.this, "Sign in successfully", Toast.LENGTH_LONG).show();
+                                Intent homeActivity = new Intent(SignIn.this, HomeActivity.class);
+                                startActivity(homeActivity);
                             }else
                                 Toast.makeText(SignIn.this, "Sign in Failed!!!!!", Toast.LENGTH_LONG).show();
                         }else{
