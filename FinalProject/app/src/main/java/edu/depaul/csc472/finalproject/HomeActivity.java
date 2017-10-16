@@ -1,5 +1,6 @@
 package edu.depaul.csc472.finalproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,9 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -33,7 +33,7 @@ public class HomeActivity extends AppCompatActivity
 
     public static List<Truck> myTrucks = new ArrayList<Truck>();
     public ListView lv;
-
+    String menu = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +41,7 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Menu");
         setSupportActionBar(toolbar);
+        lv = (ListView) findViewById(R.id.trucksList);
 
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -51,12 +52,11 @@ public class HomeActivity extends AppCompatActivity
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot data: dataSnapshot.getChildren()) {
                     Truck truck = data.getValue(Truck.class);
-                    Toast.makeText(HomeActivity.this, truck.toString(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(HomeActivity.this, truck.toString(), Toast.LENGTH_LONG).show();
                     myTrucks.add(truck);
 
                 }
                 TruckListAdapter adapter = new TruckListAdapter(HomeActivity.this,R.layout.listview,myTrucks);
-                lv = (ListView) findViewById(R.id.trucksList);
                 lv.setAdapter(adapter);
             }
 
@@ -67,7 +67,16 @@ public class HomeActivity extends AppCompatActivity
             }
         });
 
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                menu = myTrucks.get(i).getTruckName();
+                Intent menuActivity = new Intent(HomeActivity.this,MenuActivity.class);
+                menuActivity.putExtra("TruckName",menu);
+                startActivity(menuActivity);
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -130,8 +139,9 @@ public class HomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        if(id == R.id.nav_profile){
 
-        if (id == R.id.nav_order) {
+        }else if (id == R.id.nav_order) {
             // Handle the camera action
         } else if (id == R.id.nav_logout) {
             finish();
