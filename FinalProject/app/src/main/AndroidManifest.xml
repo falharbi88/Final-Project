@@ -27,7 +27,12 @@
         <activity
             android:name=".MenuActivity"
             android:label="@string/title_activity_menu"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".MealDetailsActivity"
+            android:label="@string/title_activity_meal_details"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ProfileActivity"></activity>
     </application>
 
 </manifest>

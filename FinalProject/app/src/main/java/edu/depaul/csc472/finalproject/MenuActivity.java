@@ -1,5 +1,6 @@
 package edu.depaul.csc472.finalproject;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -25,7 +26,7 @@ public class MenuActivity extends AppCompatActivity {
 
     public static List<Menu> myMeals = new ArrayList<Menu>();
     public ListView lv;
-    String menu = "";
+    String meal = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,10 +73,9 @@ public class MenuActivity extends AppCompatActivity {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //menu = myTrucks.get(i).getTruckName();
-                //Intent menuActivity = new Intent(HomeActivity.this,MenuActivity.class);
-                //menuActivity.putExtra("TruckName",menu);
-                //startActivity(menuActivity);
+                Intent mealActivity = new Intent(MenuActivity.this,MealDetailsActivity.class);
+                mealActivity.putExtra("MealNumber",i);
+                startActivity(mealActivity);
             }
         });
 

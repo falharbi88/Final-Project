@@ -34,6 +34,7 @@ public class HomeActivity extends AppCompatActivity
     public static List<Truck> myTrucks = new ArrayList<Truck>();
     public ListView lv;
     String menu = "";
+    String username = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +43,8 @@ public class HomeActivity extends AppCompatActivity
         toolbar.setTitle("Menu");
         setSupportActionBar(toolbar);
         lv = (ListView) findViewById(R.id.trucksList);
-
+        username = getIntent().getStringExtra("Username");
+        myTrucks.clear();
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference table_truck = database.getReference("Trucks");
@@ -140,6 +142,9 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if(id == R.id.nav_profile){
+            Intent profileActivity = new Intent(HomeActivity.this,ProfileActivity.class);
+            profileActivity.putExtra("Username",username);
+            startActivity(profileActivity);
 
         }else if (id == R.id.nav_order) {
             // Handle the camera action
