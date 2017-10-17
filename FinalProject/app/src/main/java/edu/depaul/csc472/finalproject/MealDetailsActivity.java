@@ -1,5 +1,6 @@
 package edu.depaul.csc472.finalproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -34,13 +35,18 @@ public class MealDetailsActivity extends AppCompatActivity {
         mealPriceText.setText("$"+menu.getPriceMeal());
         TextView adText = (TextView) findViewById(R.id.adText);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, menu.getNameMeal() + " Added To Cart", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                MenuActivity.myOrders.add(menu);
+
             }
         });
+
     }
 
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
@@ -63,6 +69,8 @@ public class MealDetailsActivity extends AppCompatActivity {
         }else
         if(id == R.id.action_cart) {
             Toast.makeText(MealDetailsActivity.this, "You selected cart page", Toast.LENGTH_LONG).show();
+            Intent cart = new Intent(MealDetailsActivity.this,CartActivity.class);
+            startActivity(cart);
             return true;
         }
 

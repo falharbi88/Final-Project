@@ -25,6 +25,7 @@ import edu.depaul.csc472.finalproject.Model.Menu;
 public class MenuActivity extends AppCompatActivity {
 
     public static List<Menu> myMeals = new ArrayList<Menu>();
+    public static List<Menu> myOrders = new ArrayList<Menu>();
     public ListView lv;
     String meal = "";
 
@@ -35,6 +36,7 @@ public class MenuActivity extends AppCompatActivity {
         lv = (ListView) findViewById(R.id.menuList);
         String truckName = getIntent().getStringExtra("TruckName");
         myMeals.clear();
+        myOrders.clear();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(truckName.toUpperCase());
@@ -54,7 +56,7 @@ public class MenuActivity extends AppCompatActivity {
 
                 for(DataSnapshot data: dataSnapshot.getChildren()) {
                     Menu menu = data.getValue(Menu.class);
-                    Toast.makeText(MenuActivity.this, menu.toString(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(MenuActivity.this, menu.toString(), Toast.LENGTH_LONG).show();
                     myMeals.add(menu);
 
                 }
@@ -101,6 +103,8 @@ public class MenuActivity extends AppCompatActivity {
         }else
             if(id == R.id.action_cart) {
                 Toast.makeText(MenuActivity.this, "You selected cart page", Toast.LENGTH_LONG).show();
+                Intent cart = new Intent(MenuActivity.this,CartActivity.class);
+                startActivity(cart);
                 return true;
             }
 
