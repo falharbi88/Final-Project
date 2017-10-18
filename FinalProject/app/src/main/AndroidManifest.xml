@@ -33,7 +33,8 @@
             android:label="@string/title_activity_meal_details"
             android:theme="@style/AppTheme" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".CartActivity"></activity>
+        <activity android:name=".CartActivity" />
+        <activity android:name=".AboutActivity"></activity>
     </application>
 
 </manifest>
