@@ -1,5 +1,6 @@
 package edu.depaul.csc472.finalproject;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,18 +43,26 @@ public class CartActivity extends AppCompatActivity {
             totalPrice.setText("$"+String.valueOf(sum));
         }
 
-//        submitButton.setOnClickListener(new View.OnClickListener(){
-//
-//
-//            @Override
-//            public void onClick(View view) {
-//                if(flag){
-//                    final ProgressDialog myDialog = new ProgressDialog(CartActivity.this);
-//                    myDialog.setMessage("Your Order has bee submitted");
-//                    myDialog.show();
-//                }
-//            }
-//        });
+       submitButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                if(flag){
+                    final Dialog dialog = new Dialog(CartActivity.this);
+                    dialog.setContentView(R.layout.custom);
+                    Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+                    dialogButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                            Intent home = new Intent(CartActivity.this, HomeActivity.class);
+                            startActivity(home);
+                        }
+                    });
+                    dialog.show();
+                }
+            }
+        });
 
 
     }
