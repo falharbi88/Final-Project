@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import edu.depaul.csc472.finalproject.Model.Menu;
+import edu.depaul.csc472.finalproject.Model.Meal;
 
 public class MealDetailsActivity extends AppCompatActivity {
     public int mealNumber = 0;
@@ -24,15 +24,15 @@ public class MealDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_meal_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mealNumber = getIntent().getIntExtra("MealNumber",0);
-        final Menu menu = MenuActivity.myMeals.get(mealNumber);
-        toolbar.setTitle(menu.getNameMeal().toUpperCase());
+        final Meal meal = MenuActivity.myMeals.get(mealNumber);
+        toolbar.setTitle(meal.getNameMeal().toUpperCase());
         setSupportActionBar(toolbar);
         ImageView image = (ImageView) findViewById(R.id.mealImage);
         TextView mealNameText = (TextView) findViewById(R.id.mealName);
         TextView mealPriceText = (TextView) findViewById(R.id.mealPrice);
-        Picasso.with(MealDetailsActivity.this).load(menu.getImageMeal()).into(image);
-        mealNameText.setText(menu.getNameMeal());
-        mealPriceText.setText("$"+menu.getPriceMeal());
+        Picasso.with(MealDetailsActivity.this).load(meal.getImageMeal()).into(image);
+        mealNameText.setText(meal.getNameMeal());
+        mealPriceText.setText("$"+meal.getPriceMeal());
         TextView adText = (TextView) findViewById(R.id.adText);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -40,9 +40,9 @@ public class MealDetailsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, menu.getNameMeal() + " Added To Cart", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, meal.getNameMeal() + " Added To Cart", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                MenuActivity.myOrders.add(menu);
+                MenuActivity.myOrders.add(meal);
 
             }
         });

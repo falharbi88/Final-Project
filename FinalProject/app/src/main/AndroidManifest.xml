@@ -34,7 +34,9 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".CartActivity" />
-        <activity android:name=".AboutActivity"></activity>
+        <activity android:name=".AboutActivity" />
+        <activity android:name=".OrderHistoryActivity" />
+        <activity android:name=".OrderHistoryDetailsActivity"></activity>
     </application>
 
 </manifest>

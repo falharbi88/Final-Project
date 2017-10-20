@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import edu.depaul.csc472.finalproject.Model.Truck;
@@ -33,14 +34,15 @@ public class HomeActivity extends AppCompatActivity
 
     public static List<Truck> myTrucks = new ArrayList<Truck>();
     public ListView lv;
-    String menu = "";
-    String username = "";
+    public String truckName = "";
+    public static String username = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Menu");
+        toolbar.setTitle("Food Trucks");
         setSupportActionBar(toolbar);
         lv = (ListView) findViewById(R.id.trucksList);
         username = getIntent().getStringExtra("Username");
@@ -54,7 +56,6 @@ public class HomeActivity extends AppCompatActivity
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot data: dataSnapshot.getChildren()) {
                     Truck truck = data.getValue(Truck.class);
-                    //Toast.makeText(HomeActivity.this, truck.toString(), Toast.LENGTH_LONG).show();
                     myTrucks.add(truck);
 
                 }
@@ -73,9 +74,9 @@ public class HomeActivity extends AppCompatActivity
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                menu = myTrucks.get(i).getTruckName();
+                truckName = myTrucks.get(i).getTruckName();
                 Intent menuActivity = new Intent(HomeActivity.this,MenuActivity.class);
-                menuActivity.putExtra("TruckName",menu);
+                menuActivity.putExtra("TruckName",truckName);
                 startActivity(menuActivity);
             }
         });
@@ -147,7 +148,10 @@ public class HomeActivity extends AppCompatActivity
             startActivity(profileActivity);
 
         }else if (id == R.id.nav_order) {
-            // Handle the camera action
+            Intent orderHistoryActivity = new Intent(HomeActivity.this,OrderHistoryActivity.class);
+            orderHistoryActivity.putExtra("Username",username);
+            startActivity(orderHistoryActivity);
+
         } else if (id == R.id.nav_logout) {
             finish();
 

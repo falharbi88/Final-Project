@@ -4,12 +4,12 @@ package edu.depaul.csc472.finalproject.Model;
  * Created by mohammadalharbi on 10/15/17.
  */
 
-public class Menu {
+public class Meal {
     public String imageMeal;
     public String nameMeal;
     public String priceMeal;
 
-    public Menu(String imageMeal, String nameMeal, String priceMeal) {
+    public Meal(String imageMeal, String nameMeal, String priceMeal) {
         this.imageMeal = imageMeal;
         this.nameMeal = nameMeal;
         this.priceMeal = priceMeal;
@@ -17,14 +17,14 @@ public class Menu {
 
     @Override
     public String toString() {
-        return "Menu{" +
+        return "Meal{" +
                 "imageMeal='" + imageMeal + '\'' +
                 ", nameMeal='" + nameMeal + '\'' +
                 ", priceMeal='" + priceMeal + '\'' +
                 '}';
     }
 
-    public Menu() {
+    public Meal() {
     }
 
     public String getImageMeal() {

@@ -12,19 +12,18 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import edu.depaul.csc472.finalproject.Model.Menu;
-import edu.depaul.csc472.finalproject.Model.Truck;
+import edu.depaul.csc472.finalproject.Model.Meal;
 
 /**
  * Created by mohammadalharbi on 10/15/17.
  */
 
-public class MenuListAdapter extends ArrayAdapter<Menu> {
+public class MenuListAdapter extends ArrayAdapter<Meal> {
 
 
-    public List<Menu> meals;
+    public List<Meal> meals;
 
-    public MenuListAdapter (Context context, int resource, List<Menu> objects){
+    public MenuListAdapter (Context context, int resource, List<Meal> objects){
         super(context,resource,objects);
         meals = MenuActivity.myMeals;
     }
@@ -36,15 +35,15 @@ public class MenuListAdapter extends ArrayAdapter<Menu> {
             convertView= LayoutInflater.from(getContext()).inflate(R.layout.menuview,parent,false);
         }
 
-        Menu menu = meals.get(position);
+        Meal meal = meals.get(position);
 
         TextView mealName = (TextView) convertView.findViewById(R.id.mealName);
         TextView mealPrice = (TextView) convertView.findViewById(R.id.mealPrice);
         ImageView mealImage = convertView.findViewById(R.id.mealImage);
 
-        mealName.setText(menu.getNameMeal());
-        mealPrice.setText(menu.getPriceMeal());
-        Picasso.with(getContext()).load(menu.getImageMeal()).into(mealImage);
+        mealName.setText(meal.getNameMeal());
+        mealPrice.setText(meal.getPriceMeal());
+        Picasso.with(getContext()).load(meal.getImageMeal()).into(mealImage);
 
         return convertView;
 

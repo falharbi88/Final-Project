@@ -19,22 +19,22 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.depaul.csc472.finalproject.Model.Menu;
+import edu.depaul.csc472.finalproject.Model.Meal;
 
 
 public class MenuActivity extends AppCompatActivity {
 
-    public static List<Menu> myMeals = new ArrayList<Menu>();
-    public static List<Menu> myOrders = new ArrayList<Menu>();
+    public static List<Meal> myMeals = new ArrayList<Meal>();
+    public static List<Meal> myOrders = new ArrayList<Meal>();
     public ListView lv;
-    String meal = "";
+    public static String truckName="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         lv = (ListView) findViewById(R.id.menuList);
-        String truckName = getIntent().getStringExtra("TruckName");
+        truckName = getIntent().getStringExtra("TruckName");
         myMeals.clear();
         myOrders.clear();
 
@@ -51,14 +51,9 @@ public class MenuActivity extends AppCompatActivity {
         table_menu.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //Menu menu = dataSnapshot.child("02").getValue(Menu.class);
-                //Toast.makeText(MenuActivity.this, menu.toString(), Toast.LENGTH_LONG).show();
-
                 for(DataSnapshot data: dataSnapshot.getChildren()) {
-                    Menu menu = data.getValue(Menu.class);
-                    //Toast.makeText(MenuActivity.this, menu.toString(), Toast.LENGTH_LONG).show();
-                    myMeals.add(menu);
-
+                    Meal meal = data.getValue(Meal.class);
+                    myMeals.add(meal);
                 }
                 MenuListAdapter adapter = new MenuListAdapter(MenuActivity.this, R.layout.menuview, myMeals);
                 lv.setAdapter(adapter);
