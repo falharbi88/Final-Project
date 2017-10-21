@@ -1,6 +1,7 @@
 package edu.depaul.csc472.finalproject;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -81,7 +82,7 @@ public class CartActivity extends AppCompatActivity {
             table_orders.child(username).child(MenuActivity.truckName).child((count).toString()).child(j.toString()).setValue(MenuActivity.myOrders.get(i));
         }
         MenuActivity.myOrders.clear();
+        setResult(RESULT_OK);
         finish();
-
     }
 }

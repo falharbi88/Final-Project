@@ -26,6 +26,7 @@ import edu.depaul.csc472.finalproject.Model.Truck;
 
 public class OrderHistoryActivity extends AppCompatActivity {
 
+    private static final int CODEFROMORDERHISTORY = 210;
     public static List<Order> myOrders = new ArrayList<Order>();
     public ListView lv;
     public String username="";
@@ -35,7 +36,6 @@ public class OrderHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
-
         username = getIntent().getStringExtra("Username");
         lv = (ListView) findViewById(R.id.orderlist);
         myOrders.clear();
@@ -55,7 +55,8 @@ public class OrderHistoryActivity extends AppCompatActivity {
                                     Meal meal = data4.getValue(Meal.class);
                                     myMeals.add(meal);
                                 }
-                                order = new Order(data1.getKey(), data2.getKey(), data3.getKey(), myMeals);
+                                order = new Order(data1.getKey(), data2.getKey(), data3.getKey(), new ArrayList<Meal>(myMeals));
+                                myMeals.clear();
                                 myOrders.add(order);
                             }
                         }
@@ -78,11 +79,26 @@ public class OrderHistoryActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 orderNo = myOrders.get(i).getOrderNumber();
                 Intent orderHistoryDetailsActivity = new Intent(OrderHistoryActivity.this,OrderHistoryDetailsActivity.class);
-                orderHistoryDetailsActivity.putExtra("OrderNumber",orderNo);
-                startActivity(orderHistoryDetailsActivity);
+                orderHistoryDetailsActivity.putExtra("OrderNumber",String.valueOf(i));
+                //startActivity(orderHistoryDetailsActivity);
+                startActivityForResult(orderHistoryDetailsActivity,CODEFROMORDERHISTORY);
             }
         });
 
 
     }
+
+    protected void onActivityResult(int requestedCode, int resultCode, Intent data){
+        if(requestedCode==CODEFROMORDERHISTORY){
+            if(resultCode==RESULT_OK){
+                setResult(RESULT_OK);
+                finish();
+
+            }
+        }
+
+
+    }
+
+
 }

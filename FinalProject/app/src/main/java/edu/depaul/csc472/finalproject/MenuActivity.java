@@ -24,6 +24,8 @@ import edu.depaul.csc472.finalproject.Model.Meal;
 
 public class MenuActivity extends AppCompatActivity {
 
+    public static final int MENU_CODE=110;
+
     public static List<Meal> myMeals = new ArrayList<Meal>();
     public static List<Meal> myOrders = new ArrayList<Meal>();
     public ListView lv;
@@ -72,9 +74,22 @@ public class MenuActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent mealActivity = new Intent(MenuActivity.this,MealDetailsActivity.class);
                 mealActivity.putExtra("MealNumber",i);
-                startActivity(mealActivity);
+                //startActivity(mealActivity);
+                startActivityForResult(mealActivity,MENU_CODE);
+
             }
         });
+
+    }
+
+    protected void onActivityResult(int requestedCode, int resultCode, Intent data){
+        if(requestedCode==MENU_CODE){
+            if(resultCode==RESULT_OK){
+                setResult(RESULT_OK);
+                finish();
+            }
+        }
+
 
     }
 
@@ -99,7 +114,8 @@ public class MenuActivity extends AppCompatActivity {
             if(id == R.id.action_cart) {
                 Toast.makeText(MenuActivity.this, "You selected cart page", Toast.LENGTH_LONG).show();
                 Intent cart = new Intent(MenuActivity.this,CartActivity.class);
-                startActivity(cart);
+                //startActivity(cart);
+                startActivityForResult(cart,MENU_CODE);
                 return true;
             }
 

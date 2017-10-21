@@ -17,6 +17,8 @@ import com.squareup.picasso.Picasso;
 import edu.depaul.csc472.finalproject.Model.Meal;
 
 public class MealDetailsActivity extends AppCompatActivity {
+    public static final int MEAL_CODE=120;
+
     public int mealNumber = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,18 @@ public class MealDetailsActivity extends AppCompatActivity {
 
     }
 
+    protected void onActivityResult(int requestedCode, int resultCode, Intent data){
+        if(requestedCode==MEAL_CODE){
+            if(resultCode==RESULT_OK){
+                setResult(RESULT_OK);
+                finish();
+
+            }
+        }
+
+
+    }
+
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_meals_page, menu);
@@ -70,11 +84,14 @@ public class MealDetailsActivity extends AppCompatActivity {
         if(id == R.id.action_cart) {
             Toast.makeText(MealDetailsActivity.this, "You selected cart page", Toast.LENGTH_LONG).show();
             Intent cart = new Intent(MealDetailsActivity.this,CartActivity.class);
-            startActivity(cart);
+            //startActivity(cart);
+            startActivityForResult(cart,MEAL_CODE);
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 }
 

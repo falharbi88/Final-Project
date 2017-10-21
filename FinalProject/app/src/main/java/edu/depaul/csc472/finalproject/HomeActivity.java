@@ -32,6 +32,7 @@ import edu.depaul.csc472.finalproject.Model.Truck;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final int HOME_CODE=100;
     public static List<Truck> myTrucks = new ArrayList<Truck>();
     public ListView lv;
     public String truckName = "";
@@ -77,7 +78,8 @@ public class HomeActivity extends AppCompatActivity
                 truckName = myTrucks.get(i).getTruckName();
                 Intent menuActivity = new Intent(HomeActivity.this,MenuActivity.class);
                 menuActivity.putExtra("TruckName",truckName);
-                startActivity(menuActivity);
+                //startActivity(menuActivity);
+                startActivityForResult(menuActivity,HOME_CODE);
             }
         });
 
@@ -104,6 +106,17 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
+    protected void onActivityResult(int requestedCode, int resultCode, Intent data){
+        if(requestedCode==HOME_CODE){
+            if(resultCode==RESULT_OK){
+
+            }
+        }
+
+
+    }
+
 
     @Override
     public void onBackPressed() {
