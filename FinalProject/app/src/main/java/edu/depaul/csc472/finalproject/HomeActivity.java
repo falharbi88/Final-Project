@@ -144,6 +144,8 @@ public class HomeActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent about = new Intent(HomeActivity.this,AboutActivity.class);
+            startActivity(about);
             return true;
         }
 

@@ -1,9 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
     tools:context="edu.depaul.csc472.finalproject.AboutActivity">
 
-</android.support.constraint.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="212dp"
+        app:srcCompat="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:text="Food Truck Project"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="CSC 472 Class\n\n This course introduces the core issues associated with application development for mobile devices using the Android platform.
+                \n\n Professor: Jia, Xiaoping\n\n Xiaoping Jia is the Director of Institute for Software Engineering.
+                \n Xiaoping Jia received his undergraduate degree and Master's degree in Computer Science from Fudan University, Shanghai, China.
+                He received his Ph.D. in Computer Science from Northwestern University. \n\n Done By: \n Student 1: Mohammed Alharbi\n\n
+                Student 2: Fahad Alharbi \n\n Food Truck App that allows users to explore trucks nearby, explore menu and submit order.
+                Users can check the food truck menu and add items to their cart."
+                android:textAlignment="center"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
