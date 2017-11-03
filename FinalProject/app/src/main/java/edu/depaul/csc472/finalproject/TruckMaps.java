@@ -1,6 +1,7 @@
 package edu.depaul.csc472.finalproject;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -8,6 +9,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -23,14 +27,21 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+
+import edu.depaul.csc472.finalproject.Model.Truck;
 
 public class TruckMaps extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleMap mMap;
     private static final int ERROR_DIALOG_REQUEST = 900;
     private GoogleApiClient mLocationClient;
-    private LocationListener mListener;
+    public static final int MAP_CODE = 100;
+    public HashMap<String, Truck> myTruck = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,33 +57,14 @@ public class TruckMaps extends FragmentActivity implements OnMapReadyCallback, G
                 .addOnConnectionFailedListener(this)
                 .build();
         mLocationClient.connect();
-        if (servicesOk()) {
+        servicesOk();
 
-        }
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        //41.878502, -87.625564
-        //LatLng DePaulCDM = new LatLng(41.878502,-87.625564);
-        //mMap.addMarker(new MarkerOptions().position(DePaulCDM).title("Current Location"));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(DePaulCDM));
-        //
         loadData();
-        //goToLocation(41.878502,-87.625564,15);
     }
 
 
@@ -99,19 +91,67 @@ public class TruckMaps extends FragmentActivity implements OnMapReadyCallback, G
         mMap.addMarker(new MarkerOptions().position(latLang).title("Current Location"));
         mMap.moveCamera(update);
 
+
     }
 
     private void loadData() {
-
-        for (int i = 0; i < HomeActivity.myTrucks.size(); i++) {
+        int i =0;
+        for (i = 0; i < HomeActivity.myTrucks.size(); i++) {
             String location = HomeActivity.myTrucks.get(i).getTruckLocation();
             String myString[] = location.split(",");
             Double lat = Double.valueOf(myString[0]);
             Double lng = Double.valueOf(myString[1]);
             LatLng latLang = new LatLng(lat, lng);
             CameraUpdate update = CameraUpdateFactory.newLatLngZoom(latLang, 15);
-            mMap.addMarker(new MarkerOptions().position(latLang).title(HomeActivity.myTrucks.get(i).getTruckName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.foodtruck)));
+            myTruck.put(HomeActivity.myTrucks.get(i).getTruckName(),HomeActivity.myTrucks.get(i));
+            mMap.addMarker(new MarkerOptions()
+                    .position(latLang)
+                    .title(HomeActivity.myTrucks.get(i).getTruckName())
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.foodtruck))
+                    .snippet(HomeActivity.myTrucks.get(i).getTruckType()));
             mMap.moveCamera(update);
+
+            final int finalI = i;
+            mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+                @Override
+                public View getInfoWindow(Marker marker) {
+                    return null;
+                }
+
+                @Override
+                public View getInfoContents(Marker marker) {
+
+                    View v = getLayoutInflater().inflate(R.layout.info_window, null);
+                    TextView truckName = (TextView) v.findViewById(R.id.TruckName);
+                    TextView truckType = (TextView) v.findViewById(R.id.TruckType);
+                    ImageView truckImage = v.findViewById(R.id.imageView1);
+                    truckName.setText(marker.getTitle());
+                    truckType.setText(marker.getSnippet());
+                    if (myTruck.get(marker.getTitle()) != null) {
+                        Picasso.with(TruckMaps.this).load(myTruck.get(marker.getTitle()).getTruckImage()).into(truckImage);
+                    }
+                    return v;
+
+                }
+            });
+
+            mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                @Override
+                public void onInfoWindowClick(Marker marker) {
+                    if(marker.getTitle().equals("current location")) {
+                        return;
+                    }else{
+                            String truckName = marker.getTitle();
+                            Intent menuActivity = new Intent(TruckMaps.this, MenuActivity.class);
+                            menuActivity.putExtra("TruckName", truckName);
+                            //startActivity(menuActivity);
+                            startActivityForResult(menuActivity, MAP_CODE);
+                    }
+
+                }
+
+
+            });
 
 
         }
@@ -119,7 +159,20 @@ public class TruckMaps extends FragmentActivity implements OnMapReadyCallback, G
     }
 
 
-    private void displayCurrentLocation() {
+    protected void onActivityResult(int requestedCode, int resultCode, Intent data){
+        if(requestedCode==MAP_CODE){
+            if(resultCode==RESULT_OK){
+
+            }
+        }
+
+
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        Toast.makeText(this, "Ready To Map", Toast.LENGTH_LONG).show();
+
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -132,48 +185,20 @@ public class TruckMaps extends FragmentActivity implements OnMapReadyCallback, G
             return;
         }
         Location currentLocation = LocationServices.FusedLocationApi.getLastLocation(mLocationClient);
+        currentLocation.setLongitude(-87.625564);
+        currentLocation.setLatitude(41.878502);
         if (currentLocation == null) {
             Toast.makeText(this, "Current Location is Null", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, "Current Location is detected", Toast.LENGTH_LONG).show();
             LatLng latLang = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
             CameraUpdate update = CameraUpdateFactory.newLatLngZoom(latLang, 15);
-            mMap.addMarker(new MarkerOptions().position(latLang).title("current location"));
+            mMap.addMarker(new MarkerOptions().position(latLang).title("current location").snippet("You are here"));
             mMap.moveCamera(update);
 
         }
-
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        Toast.makeText(this, "Ready To Map", Toast.LENGTH_LONG).show();
-        displayCurrentLocation();
         return;
 
-//        mListener = new LocationListener() {
-//            @Override
-//            public void onLocationChanged(Location location) {
-//                goToLocation(location.getLatitude(), location.getLongitude(), 15);
-//                Toast.makeText(TruckMaps.this, location.toString(), Toast.LENGTH_LONG).show();
-//
-//            }
-//        };
-//        LocationRequest request = LocationRequest.create();
-//        request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-//        request.setInterval(5000);
-//        request.setFastestInterval(1000);
-//        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-//            return;
-//        }
-//        LocationServices.FusedLocationApi.requestLocationUpdates(mLocationClient, request, mListener);
 
 
     }
@@ -188,10 +213,5 @@ public class TruckMaps extends FragmentActivity implements OnMapReadyCallback, G
 
     }
 
-//    @Override
-//    public void onPause(){
-//        super.onPause();
-//        LocationServices.FusedLocationApi.removeLocationUpdates(mLocationClient,mListener);
-//    }
 
 }
