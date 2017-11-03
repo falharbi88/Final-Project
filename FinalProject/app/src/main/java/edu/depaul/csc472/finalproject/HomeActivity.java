@@ -87,13 +87,9 @@ public class HomeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, myTrucks.get(1).getTruckName().toString(), Snackbar.LENGTH_LONG).setAction("Action", null).show();
-
-                //for(Truck truck: myTrucks){
-                 //   Snackbar.make(view, truck.toString(), Snackbar.LENGTH_LONG)
-                  //          .setAction("Action", null).show();
-
-                //}
+                Snackbar.make(view, "Map Activity", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                Intent map = new Intent(HomeActivity.this, TruckMaps.class);
+                startActivity(map);
             }
         });
 

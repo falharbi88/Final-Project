@@ -8,5 +8,6 @@
     <string name="action_settings">About us</string>
     <string name="title_activity_menu">MenuActivity</string>
     <string name="title_activity_meal_details">MealDetailsActivity</string>
+    <string name="title_activity_truck_maps">Map</string>
 
 </resources>
