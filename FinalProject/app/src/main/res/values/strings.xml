@@ -9,5 +9,6 @@
     <string name="title_activity_menu">MenuActivity</string>
     <string name="title_activity_meal_details">MealDetailsActivity</string>
     <string name="title_activity_truck_maps">Map</string>
+    <string name="error_field_required">This field is required</string>
 
 </resources>
